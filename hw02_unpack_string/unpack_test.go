@@ -18,6 +18,9 @@ func TestUnpack(t *testing.T) {
 		{input: "aaa0b", expected: "aab"},
 		{input: "🙃0", expected: ""},
 		{input: "aaф0b", expected: "aab"},
+		{input: "aaф0b__________", expected: "aab__________"},
+		{input: "__________0", expected: "_________"},
+		{input: "%^%#$", expected: "%^%#$"},
 		// uncomment if task with asterisk completed
 		// {input: `qwe\4\5`, expected: `qwe45`},
 		// {input: `qwe\45`, expected: `qwe44444`},
@@ -34,11 +37,31 @@ func TestUnpack(t *testing.T) {
 	}
 }
 
-func TestUnpackInvalidString(t *testing.T) {
-	invalidStrings := []string{"3abc", "45", "aaa10b"}
-	for _, tc := range invalidStrings {
-		t.Run(tc, func(t *testing.T) {
-			_, err := Unpack(tc)
+func TestUnpackInvalidStringExtended(t *testing.T) {
+	tests := []struct {
+		name        string
+		inputString string
+	}{
+		{
+			name:        "digit at beginning of string",
+			inputString: "3abc",
+		},
+		{
+			name:        "two digits",
+			inputString: "a45bc",
+		},
+		{
+			name:        "zero at beginning of string",
+			inputString: "0abc",
+		},
+		{
+			name:        "three digits with special characters",
+			inputString: "*jhjkh$$453@_",
+		},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			_, err := Unpack(tc.inputString)
 			require.Truef(t, errors.Is(err, ErrInvalidString), "actual error %q", err)
 		})
 	}
