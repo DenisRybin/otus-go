@@ -36,7 +36,7 @@ func Top10(source string) []string {
 		Value int
 	}
 
-	var ss []kv
+	ss := make([]kv, 0, len(m))
 	for k, v := range m {
 		ss = append(ss, kv{k, v})
 	}
