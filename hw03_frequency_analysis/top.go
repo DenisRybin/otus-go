@@ -70,5 +70,10 @@ func Top10(source string) []string {
 	}
 
 	result = append(result, resultgroup...)
-	return result[0:10] // исключаем 11-ю, не отсортированную в группе
+	sliceLen := (len(result))
+	if sliceLen > 10 {
+		return result[0:10] // исключаем 11-ю, не отсортированную в группе
+	} else {
+		return result[0:sliceLen]
+	}
 }
