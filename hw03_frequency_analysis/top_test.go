@@ -44,6 +44,7 @@ var text = `Как видите, он  спускается  по  лестни�
 		В этот вечер...`
 
 var text2 = "bb bb ** ** ** ** ** ** mm mm mm zzzz"
+
 var text3 = "uuu"
 
 func TestTop10(t *testing.T) {
